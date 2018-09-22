@@ -8,6 +8,7 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.TestRule
+import org.mockito.ArgumentMatchers
 import org.mockito.Mock
 import org.mockito.Mockito
 import org.mockito.Mockito.`when`
@@ -40,7 +41,7 @@ class MainScreenTests {
 
     @Test
     fun should_show_progress_bar_when_new_images_loading() {
-        `when`(flickrRepository.getPhotos(1)).thenReturn(Single.create {emitter ->
+        `when`(flickrRepository.getPhotos(ArgumentMatchers.anyInt())).thenReturn(Single.create { emitter ->
             val photo = FlickrPhoto(FlickrImageUrlRetriever(arrayListOf(), settings))
             emitter.onSuccess(arrayListOf(photo))
         })
@@ -52,7 +53,7 @@ class MainScreenTests {
 
     @Test
     fun should_load_one_element_from_repository() {
-        `when`(flickrRepository.getPhotos(1)).thenReturn(Single.create {emitter ->
+        `when`(flickrRepository.getPhotos(ArgumentMatchers.anyInt())).thenReturn(Single.create {emitter ->
             val photo = FlickrPhoto(FlickrImageUrlRetriever(arrayListOf(), settings))
             emitter.onSuccess(arrayListOf(photo))
         })
