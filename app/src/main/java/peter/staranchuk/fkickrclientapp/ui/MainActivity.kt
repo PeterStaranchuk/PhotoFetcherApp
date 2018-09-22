@@ -31,14 +31,14 @@ class MainActivity : DaggerAppCompatActivity() {
 
     private fun loadFullPhotosScreen(currentPhotoPosition: Int?) {
         supportFragmentManager.beginTransaction()
-                .replace(R.id.flScreen, FullScreenPhotosFragment.getInstance(currentPhotoPosition))
+                .add(R.id.flScreen, FullScreenPhotosFragment.getInstance(currentPhotoPosition))
                 .addToBackStack("")
                 .commit()
     }
 
     private fun loadRecentPhotosScreen() {
         supportFragmentManager.beginTransaction()
-                .replace(R.id.flScreen, RecentPhotosFragment())
+                .add(R.id.flScreen, RecentPhotosFragment())
                 .addToBackStack("")
                 .commit()
     }

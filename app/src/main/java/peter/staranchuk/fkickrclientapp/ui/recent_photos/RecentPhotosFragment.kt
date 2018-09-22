@@ -51,17 +51,10 @@ class RecentPhotosFragment : Fragment() {
                 }
             })
         }
-    }
 
-    override fun onStart() {
-        super.onStart()
         viewModel.photos.observe(this, Observer {newPhotos->
             newPhotos?.let { recentPhotosAdapter.addPhotos(newPhotos) }
         })
     }
 
-    override fun onStop() {
-        super.onStop()
-        viewModel.photos.removeObserver {  }
-    }
 }
