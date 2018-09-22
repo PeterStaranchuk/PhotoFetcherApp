@@ -10,7 +10,7 @@ import android.view.ViewGroup
 import kotlinx.android.synthetic.main.fragment_full_screen_photos.*
 import peter.staranchuk.fkickrclientapp.Extras
 import peter.staranchuk.fkickrclientapp.R
-import peter.staranchuk.fkickrclientapp.inflate
+import peter.staranchuk.fkickrclientapp.databinding.FragmentFullScreenPhotosBinding
 import peter.staranchuk.fkickrclientapp.ui.ViewModelMain
 
 class FullScreenPhotosFragment : Fragment() {
@@ -22,15 +22,17 @@ class FullScreenPhotosFragment : Fragment() {
         viewModel = ViewModelProviders.of(activity!!).get(ViewModelMain::class.java)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View?
-            = container?.inflate(R.layout.fragment_full_screen_photos)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        val binding = FragmentFullScreenPhotosBinding.inflate(inflater, container, false)
+        binding.viewModel = viewModel
+        binding.executePendingBindings()
+        return binding.root
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         val photoAdapter = PhotosPagerAdapter(childFragmentManager, arrayListOf()) { endPosition->
-            vpPhotos.visibility = View.GONE
-            pbNewPhotoLoading.visibility = View.VISIBLE //TODO move in binding
             viewModel.loadNextPage()
             arguments?.putInt(Extras().currentPhotoPosition, endPosition)
         }
@@ -40,8 +42,6 @@ class FullScreenPhotosFragment : Fragment() {
                 photoAdapter.addPhotos(newPhotos)
                 vpPhotos.adapter = photoAdapter
                 vpPhotos.currentItem = arguments?.getInt(Extras().currentPhotoPosition) ?: 0
-                vpPhotos.visibility = View.VISIBLE
-                pbNewPhotoLoading.visibility = View.GONE//TODO move in binding
             }
         })
         viewModel.onSetTitle(R.string.titlePhotos)
