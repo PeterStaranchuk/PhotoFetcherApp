@@ -23,6 +23,7 @@ class RecentPhotosAdapter(photos : ArrayList<GeneralPhoto>, @LayoutRes val resId
     override fun getItemCount(): Int = photoList.size
 
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
+        viewHolder.view.setOnClickListener { onClick(position) }
         return viewHolder.setPhoto(photoList[position].getMediumPhotoUrl())
     }
 

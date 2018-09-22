@@ -17,6 +17,7 @@ import peter.staranchuk.fkickrclientapp.ui.ViewModelMain
 class RecentPhotosFragment : Fragment() {
 
     private lateinit var viewModel : ViewModelMain
+    private lateinit var recentPhotosAdapter : RecentPhotosAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,9 +35,9 @@ class RecentPhotosFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         viewModel.loadNextPage()
 
-        val recentPhotosAdapter = RecentPhotosAdapter(arrayListOf(), R.layout.item_photo, {numberOfLickedPhoto->
-            //TODO implement
-        })
+        recentPhotosAdapter = RecentPhotosAdapter(arrayListOf(), R.layout.item_photo) { numberOfLickedPhoto->
+            viewModel.onOpenFullScreenPhoto(numberOfLickedPhoto)
+        }
 
         val gridLayoutManager = GridLayoutManager(context, resources.getInteger(R.integer.spanCount))
 
@@ -50,9 +51,17 @@ class RecentPhotosFragment : Fragment() {
                 }
             })
         }
+    }
 
+    override fun onStart() {
+        super.onStart()
         viewModel.photos.observe(this, Observer {newPhotos->
             newPhotos?.let { recentPhotosAdapter.addPhotos(newPhotos) }
         })
+    }
+
+    override fun onStop() {
+        super.onStop()
+        viewModel.photos.removeObserver {  }
     }
 }

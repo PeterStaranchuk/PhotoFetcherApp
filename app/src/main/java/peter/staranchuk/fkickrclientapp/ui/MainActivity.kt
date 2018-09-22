@@ -5,6 +5,7 @@ import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import dagger.android.support.DaggerAppCompatActivity
 import peter.staranchuk.fkickrclientapp.R
+import peter.staranchuk.fkickrclientapp.ui.full_screen_photos.FullScreenPhotosFragment
 import peter.staranchuk.fkickrclientapp.ui.recent_photos.RecentPhotosFragment
 import javax.inject.Inject
 
@@ -22,6 +23,17 @@ class MainActivity : DaggerAppCompatActivity() {
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(ViewModelMain::class.java)
 
         loadRecentPhotosScreen()
+
+        viewModel.onOpenFullScreenPhoto = { currentPhotoPosition: Int ->
+            loadFullPhotosScreen(currentPhotoPosition)
+        }
+    }
+
+    private fun loadFullPhotosScreen(currentPhotoPosition: Int?) {
+        supportFragmentManager.beginTransaction()
+                .replace(R.id.flScreen, FullScreenPhotosFragment.getInstance(currentPhotoPosition))
+                .addToBackStack("")
+                .commit()
     }
 
     private fun loadRecentPhotosScreen() {
@@ -29,5 +41,13 @@ class MainActivity : DaggerAppCompatActivity() {
                 .replace(R.id.flScreen, RecentPhotosFragment())
                 .addToBackStack("")
                 .commit()
+    }
+
+    override fun onBackPressed() {
+        if(supportFragmentManager.backStackEntryCount > 1) {
+            supportFragmentManager.popBackStack()
+        } else {
+            super.onBackPressed()
+        }
     }
 }

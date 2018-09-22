@@ -18,6 +18,8 @@ class ViewModelMain @Inject constructor(private val flickrPhotoRepository: Flick
     val isNewImagesLoading = ObservableField<Boolean>(true)
     val isPhotosListVisible = ObservableField<Boolean>(false)
 
+    var onOpenFullScreenPhoto: (currentPhotoPosition : Int) -> Unit = {position : Int -> /*nothing to do*/}
+
     fun loadNextPage() {
         isGeneralErrorVisible.set(false)
         isNewImagesLoading.set(true)
