@@ -22,9 +22,17 @@ class ViewModelMain @Inject constructor(private val flickrPhotoRepository: Flick
     var onSetTitle : (titleId : Int) -> Unit = { titleId -> /*nothing to do*/ }
 
     fun loadNextPage() {
+        loadPage(flickrPageNumber++)
+    }
+
+    fun reloadPage() {
+        loadPage(flickrPageNumber)
+    }
+
+    private fun loadPage(numberOfPage : Int) {
         isGeneralErrorVisible.set(false)
         isNewImagesLoading.set(true)
-        compositeDisposable.add(flickrPhotoRepository.getPhotos(flickrPageNumber++)
+        compositeDisposable.add(flickrPhotoRepository.getPhotos(numberOfPage)
                 .observeOn(AndroidSchedulers.mainThread()).subscribe({ newPhotos ->
                     val photoList = arrayListOf<GeneralPhoto>()
                     photoList.addAll(photos.value?: arrayListOf())

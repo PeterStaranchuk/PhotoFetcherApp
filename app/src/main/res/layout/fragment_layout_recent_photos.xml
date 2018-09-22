@@ -66,6 +66,7 @@
                 android:background="@color/colorPrimary"
                 android:textColor="@android:color/white"
                 android:text="@string/tryAgain"
+                android:onClick="@{()-> viewModel.reloadPage()}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 android:layout_marginTop="16dp"
