@@ -6,8 +6,8 @@ import dagger.Module
 import dagger.android.ContributesAndroidInjector
 import dagger.multibindings.IntoMap
 import peter.staranchuk.fkickrclientapp.di.view_model.ViewModelKeyAnnotation
-import peter.staranchuk.fkickrclientapp.MainActivity
-import peter.staranchuk.fkickrclientapp.ViewModelMain
+import peter.staranchuk.fkickrclientapp.ui.MainActivity
+import peter.staranchuk.fkickrclientapp.ui.ViewModelMain
 
 @Module
 internal abstract class MainActivityModule {
