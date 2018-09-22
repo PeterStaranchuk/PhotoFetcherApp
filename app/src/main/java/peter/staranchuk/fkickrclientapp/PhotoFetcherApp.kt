@@ -1,8 +1,11 @@
 package peter.staranchuk.fkickrclientapp
 
-import android.app.Application
+import dagger.android.AndroidInjector
+import dagger.android.DaggerApplication
+import peter.staranchuk.fkickrclientapp.di.componens.DaggerAppComponent
 
-class PhotoFetcherApp : Application() {
+class PhotoFetcherApp : DaggerApplication() {
 
+    override fun applicationInjector(): AndroidInjector<out DaggerApplication> = DaggerAppComponent.builder().context(this).build()
 
 }
