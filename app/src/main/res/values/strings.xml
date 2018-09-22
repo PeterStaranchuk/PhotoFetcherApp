@@ -2,4 +2,6 @@
     <string name="app_name">FkickrClientApp</string>
     <string name="tryAgain">Try again</string>
     <string name="errorDataLoad">Oops, something goes wrong.\nPlease try again</string>
+    <string name="titleRecentPhotos">Recent photos</string>
+    <string name="titlePhotos">Photos</string>
 </resources>
