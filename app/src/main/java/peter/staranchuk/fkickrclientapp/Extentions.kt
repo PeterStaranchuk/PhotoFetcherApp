@@ -12,5 +12,5 @@ fun ViewGroup.inflate(@LayoutRes layoutRes: Int, attachToRoot: Boolean = false):
 }
 
 fun ImageView.setImageFromUrl(url : String) {
-    Picasso.get().load(url).into(this)
+    Picasso.get().load(url).fit().centerInside().into(this)
 }
