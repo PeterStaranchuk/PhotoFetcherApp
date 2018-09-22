@@ -1,7 +1,8 @@
-package peter.staranchuk.fkickrclientapp
+package peter.staranchuk.fkickrclientapp.ui
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import peter.staranchuk.fkickrclientapp.R
 
 class MainActivity : AppCompatActivity() {
 
