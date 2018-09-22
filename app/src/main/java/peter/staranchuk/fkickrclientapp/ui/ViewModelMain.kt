@@ -20,6 +20,11 @@ class ViewModelMain @Inject constructor(private val flickrPhotoRepository: Flick
 
     var onOpenFullScreenPhoto : (currentPhotoPosition : Int) -> Unit = {position : Int -> /*nothing to do*/}
     var onSetTitle : (titleId : Int) -> Unit = { titleId -> /*nothing to do*/ }
+    var onBackButtonPressed : () -> Unit = {}
+
+    init {
+        photos.value = arrayListOf()
+    }
 
     fun loadNextPage() {
         loadPage(flickrPageNumber++)
@@ -35,7 +40,7 @@ class ViewModelMain @Inject constructor(private val flickrPhotoRepository: Flick
         compositeDisposable.add(flickrPhotoRepository.getPhotos(numberOfPage)
                 .observeOn(AndroidSchedulers.mainThread()).subscribe({ newPhotos ->
                     val photoList = arrayListOf<GeneralPhoto>()
-                    photoList.addAll(photos.value?: arrayListOf())
+                    photoList.addAll(photos.value!!)
                     photoList.addAll(newPhotos)
                     photos.value = photoList
                     isPhotosListVisible.set(true)

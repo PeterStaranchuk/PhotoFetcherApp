@@ -15,7 +15,6 @@ import org.mockito.MockitoAnnotations
 import peter.staranchuk.fkickrclientapp.model.objects.FlickrImageUrlRetriever
 import peter.staranchuk.fkickrclientapp.model.objects.FlickrPhoto
 import peter.staranchuk.fkickrclientapp.model.repositories.FlickrPhotosRepository
-import peter.staranchuk.fkickrclientapp.network.FlickrApi
 import peter.staranchuk.fkickrclientapp.network.sources_settings.FlickrSettings
 import peter.staranchuk.fkickrclientapp.ui.ViewModelMain
 
@@ -23,9 +22,6 @@ class MainScreenTests {
 
     @get:Rule
     var rule: TestRule = InstantTaskExecutorRule()
-
-    @Mock
-    lateinit var flickrApi: FlickrApi
 
     @Mock
     lateinit var settings : FlickrSettings
@@ -51,7 +47,7 @@ class MainScreenTests {
 
         viewModelMain.loadNextPage()
 
-        Assert.assertThat(viewModelMain.isNewImagesLoading.get(), CoreMatchers.equalTo(false))
+        Assert.assertThat(viewModelMain.isNewImagesLoading.get(), CoreMatchers.equalTo(true))
     }
 
     @Test
@@ -65,4 +61,17 @@ class MainScreenTests {
 
         Assert.assertThat(viewModelMain.photos.value!!.size, CoreMatchers.equalTo(1))
     }
+
+    @Test
+    fun should_show_general_error_message_when_error_occured() {
+        `when`(flickrRepository.getPhotos(1)).thenReturn(Single.create {emitter ->
+            emitter.onError(Throwable())
+        })
+
+        viewModelMain.reloadPage()
+
+        Assert.assertThat(viewModelMain.isGeneralErrorVisible.get(), CoreMatchers.equalTo(false))
+    }
+
+
 }
