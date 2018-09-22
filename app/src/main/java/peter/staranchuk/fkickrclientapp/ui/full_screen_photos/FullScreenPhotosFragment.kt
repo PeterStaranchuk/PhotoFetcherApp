@@ -34,6 +34,7 @@ class FullScreenPhotosFragment : Fragment() {
                 vpPhotos.currentItem = arguments?.getInt(Extras().currentPhotoPosition) ?: 0
             }
         })
+        viewModel.onSetTitle(R.string.titlePhotos)
     }
 
     companion object {

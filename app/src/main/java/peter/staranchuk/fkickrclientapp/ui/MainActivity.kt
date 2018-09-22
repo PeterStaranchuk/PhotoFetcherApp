@@ -27,6 +27,10 @@ class MainActivity : DaggerAppCompatActivity() {
         viewModel.onOpenFullScreenPhoto = { currentPhotoPosition: Int ->
             loadFullPhotosScreen(currentPhotoPosition)
         }
+
+        viewModel.onSetTitle = {
+            supportActionBar?.title = getString(it)
+        }
     }
 
     private fun loadFullPhotosScreen(currentPhotoPosition: Int?) {

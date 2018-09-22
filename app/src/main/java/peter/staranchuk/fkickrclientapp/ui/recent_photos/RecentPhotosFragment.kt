@@ -55,6 +55,8 @@ class RecentPhotosFragment : Fragment() {
         viewModel.photos.observe(this, Observer {newPhotos->
             newPhotos?.let { recentPhotosAdapter.addPhotos(newPhotos) }
         })
+
+        viewModel.onSetTitle(R.string.titleRecentPhotos)
     }
 
 }
