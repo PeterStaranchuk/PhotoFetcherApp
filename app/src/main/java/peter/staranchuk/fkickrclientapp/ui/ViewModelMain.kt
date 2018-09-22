@@ -16,6 +16,7 @@ class ViewModelMain @Inject constructor(private val flickrPhotoRepository: Flick
 
     val isGeneralErrorVisible = ObservableField<Boolean>(false)
     val isNewImagesLoading = ObservableField<Boolean>(true)
+    val isPhotosListVisible = ObservableField<Boolean>(false)
 
     fun loadNextPage() {
         isGeneralErrorVisible.set(false)
@@ -23,8 +24,10 @@ class ViewModelMain @Inject constructor(private val flickrPhotoRepository: Flick
         compositeDisposable.add(flickrPhotoRepository.getPhotos(flickrPageNumber++)
                 .observeOn(AndroidSchedulers.mainThread()).subscribe({ newPhotos ->
                     photos.value = newPhotos
+                    isPhotosListVisible.set(true)
                     isNewImagesLoading.set(false)
                 }, {
+                    isPhotosListVisible.set(false)
                     isGeneralErrorVisible.set(true)
                     isNewImagesLoading.set(false)
                 }))

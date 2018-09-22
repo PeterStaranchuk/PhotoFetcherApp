@@ -25,6 +25,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            android:visibility="@{viewModel.isPhotosListVisible? View.VISIBLE : View.GONE}"
             tools:layoutManager="android.support.v7.widget.GridLayoutManager"
             tools:listitem="@layout/item_photo"
             tools:spanCount="2" />
@@ -33,15 +34,15 @@
             style="?android:attr/progressBarStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="4dp"
-            android:layout_marginTop="8dp"
             android:visibility="@{viewModel.isNewImagesLoading? View.VISIBLE : View.GONE}"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toBottomOf="@+id/rvPhotos"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/rvPhotos" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0" />
 
         <android.support.constraint.ConstraintLayout
+            tools:visibility="gone"
             android:visibility="@{viewModel.isGeneralErrorVisible? View.VISIBLE : View.GONE}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
