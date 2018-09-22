@@ -1,30 +1,37 @@
 package peter.staranchuk.fkickrclientapp.ui.recent_photos
 
-import android.arch.lifecycle.ViewModelProvider
+import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
+import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import dagger.android.support.DaggerFragment
 import peter.staranchuk.fkickrclientapp.databinding.FragmentLayoutRecentPhotosBinding
 import peter.staranchuk.fkickrclientapp.ui.ViewModelMain
-import javax.inject.Inject
 
-class RecentPhotosFragment : DaggerFragment() {
+class RecentPhotosFragment : Fragment() {
 
-    @Inject
-    lateinit var viewModelFactory: ViewModelProvider.Factory
+    private lateinit var viewModel : ViewModelMain
 
-    lateinit var viewModel : ViewModelMain
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        viewModel = ViewModelProviders.of(activity!!).get(ViewModelMain::class.java)
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val binding = FragmentLayoutRecentPhotosBinding.inflate(inflater, container, false)
-        viewModel = ViewModelProviders.of(activity!!, viewModelFactory).get(ViewModelMain::class.java)
         binding.viewModel = viewModel
         binding.executePendingBindings()
         return binding.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        viewModel.loadNextPage()
 
+        viewModel.photos.observe(this, Observer {
+            //TODO add list loading and update
+        })
+    }
 }
