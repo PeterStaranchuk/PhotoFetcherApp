@@ -23,13 +23,26 @@ class MainActivity : DaggerAppCompatActivity() {
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(ViewModelMain::class.java)
 
         loadRecentPhotosScreen()
+        observePhotoClick()
+        observeFragmentTitle()
+        observeBackButtonPressed()
+    }
 
-        viewModel.onOpenFullScreenPhoto = { currentPhotoPosition: Int ->
-            loadFullPhotosScreen(currentPhotoPosition)
+    private fun observeBackButtonPressed() {
+        viewModel.onBackButtonPressed = {
+            onBackPressed()
         }
+    }
 
+    private fun observeFragmentTitle() {
         viewModel.onSetTitle = {
             supportActionBar?.title = getString(it)
+        }
+    }
+
+    private fun observePhotoClick() {
+        viewModel.onOpenFullScreenPhoto = { currentPhotoPosition: Int ->
+            loadFullPhotosScreen(currentPhotoPosition)
         }
     }
 

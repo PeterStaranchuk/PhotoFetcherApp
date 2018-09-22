@@ -37,6 +37,17 @@ class FullScreenPhotosFragment : Fragment() {
             arguments?.putInt(Extras().currentPhotoPosition, endPosition)
         }
 
+        observeNewPhotosLoading(photoAdapter)
+        setTitle()
+
+        btnBack.setOnClickListener { viewModel.onBackButtonPressed() }
+    }
+
+    private fun setTitle() {
+        viewModel.onSetTitle(R.string.titlePhotos)
+    }
+
+    private fun observeNewPhotosLoading(photoAdapter: PhotosPagerAdapter) {
         viewModel.photos.observe(this, Observer { newPhotos ->
             newPhotos?.let {
                 photoAdapter.addPhotos(newPhotos)
@@ -44,7 +55,6 @@ class FullScreenPhotosFragment : Fragment() {
                 vpPhotos.currentItem = arguments?.getInt(Extras().currentPhotoPosition) ?: 0
             }
         })
-        viewModel.onSetTitle(R.string.titlePhotos)
     }
 
     companion object {
