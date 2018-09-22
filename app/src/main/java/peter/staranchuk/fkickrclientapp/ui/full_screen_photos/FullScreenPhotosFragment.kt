@@ -28,10 +28,20 @@ class FullScreenPhotosFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val photoAdapter = PhotosPagerAdapter(childFragmentManager, arrayListOf()) { endPosition->
+            vpPhotos.visibility = View.GONE
+            pbNewPhotoLoading.visibility = View.VISIBLE //TODO move in binding
+            viewModel.loadNextPage()
+            arguments?.putInt(Extras().currentPhotoPosition, endPosition)
+        }
+
         viewModel.photos.observe(this, Observer { newPhotos ->
             newPhotos?.let {
-                vpPhotos.adapter = PhotosPagerAdapter(childFragmentManager, newPhotos)
+                photoAdapter.addPhotos(newPhotos)
+                vpPhotos.adapter = photoAdapter
                 vpPhotos.currentItem = arguments?.getInt(Extras().currentPhotoPosition) ?: 0
+                vpPhotos.visibility = View.VISIBLE
+                pbNewPhotoLoading.visibility = View.GONE//TODO move in binding
             }
         })
         viewModel.onSetTitle(R.string.titlePhotos)

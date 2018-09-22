@@ -5,10 +5,25 @@ import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
 import peter.staranchuk.fkickrclientapp.model.GeneralPhoto
 
-class PhotosPagerAdapter(fragmentManager : FragmentManager, val photos : List<GeneralPhoto>) : FragmentPagerAdapter(fragmentManager) {
+class PhotosPagerAdapter(fragmentManager: FragmentManager, photos: List<GeneralPhoto>, val onEndReachedAt: (position: Int) -> Unit) : FragmentPagerAdapter(fragmentManager) {
 
-    override fun getItem(position: Int): Fragment = SingleImageFragment.getInstance(photos[position].getBestPhotoUrl())
+    private val photoList = arrayListOf<GeneralPhoto>()
 
-    override fun getCount(): Int = photos.size
+    init {
+        photoList.addAll(photos)
+    }
 
+    override fun getItem(position: Int): Fragment {
+        if (position == photoList.size - 1) {
+            onEndReachedAt(position - 1)
+        }
+        return SingleImageFragment.getInstance(photoList[position].getBestPhotoUrl())
+    }
+
+    override fun getCount(): Int = Int.MAX_VALUE
+
+    fun addPhotos(newPhotos : List<GeneralPhoto>) {
+        photoList.addAll(newPhotos)
+        notifyDataSetChanged()
+    }
 }
