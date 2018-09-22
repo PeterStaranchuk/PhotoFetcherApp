@@ -47,7 +47,7 @@ class MainActivity : DaggerAppCompatActivity() {
         if(supportFragmentManager.backStackEntryCount > 1) {
             supportFragmentManager.popBackStack()
         } else {
-            super.onBackPressed()
+            finish()
         }
     }
 }
