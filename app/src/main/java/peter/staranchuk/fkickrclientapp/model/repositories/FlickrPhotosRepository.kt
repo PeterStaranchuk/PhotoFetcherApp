@@ -1,6 +1,7 @@
 package peter.staranchuk.fkickrclientapp.model.repositories
 
 import io.reactivex.Single
+import io.reactivex.schedulers.Schedulers
 import peter.staranchuk.fkickrclientapp.model.objects.FlickrImageUrlRetriever
 import peter.staranchuk.fkickrclientapp.model.objects.FlickrPhoto
 import peter.staranchuk.fkickrclientapp.network.FlickrApi
@@ -21,7 +22,7 @@ class FlickrPhotosRepository @Inject constructor(private val flickrApi: FlickrAp
                             .map { response -> response.sizeInfo }
                             .map { sizeInfo -> sizeInfo.photoSizes }
                             .map { sizes -> FlickrImageUrlRetriever(sizes, settings) }
-                            .map { urlRetriever -> FlickrPhoto(urlRetriever) }
-                }.toList()
+                            .map { urlRetriever -> FlickrPhoto(urlRetriever) }.subscribeOn(Schedulers.newThread())
+                }.toList().subscribeOn(Schedulers.newThread())
     }
 }

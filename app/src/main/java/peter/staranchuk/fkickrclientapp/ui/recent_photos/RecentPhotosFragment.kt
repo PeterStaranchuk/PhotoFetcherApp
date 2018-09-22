@@ -4,9 +4,12 @@ import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v7.widget.GridLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import kotlinx.android.synthetic.main.fragment_layout_recent_photos.*
+import peter.staranchuk.fkickrclientapp.R
 import peter.staranchuk.fkickrclientapp.databinding.FragmentLayoutRecentPhotosBinding
 import peter.staranchuk.fkickrclientapp.ui.ViewModelMain
 
@@ -30,8 +33,18 @@ class RecentPhotosFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         viewModel.loadNextPage()
 
-        viewModel.photos.observe(this, Observer {
-            //TODO add list loading and update
+        val recentPhotosAdapter = RecentPhotosAdapter(arrayListOf(), R.layout.item_photo, {numberOfLickedPhoto->
+            //TODO implement
+        })
+
+        rvPhotos.apply {
+            setHasFixedSize(true)
+            layoutManager = GridLayoutManager(context, 2)
+            adapter = recentPhotosAdapter
+        }
+
+        viewModel.photos.observe(this, Observer {newPhotos->
+            newPhotos?.let { recentPhotosAdapter.addPhotos(newPhotos) }
         })
     }
 }
