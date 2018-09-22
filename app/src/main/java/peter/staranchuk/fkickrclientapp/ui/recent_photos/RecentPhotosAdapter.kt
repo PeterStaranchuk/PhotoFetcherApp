@@ -9,7 +9,7 @@ import peter.staranchuk.fkickrclientapp.inflate
 import peter.staranchuk.fkickrclientapp.model.GeneralPhoto
 import peter.staranchuk.fkickrclientapp.setImageFromUrl
 
-class RecentPhotosAdapter(photos : ArrayList<GeneralPhoto>, @LayoutRes val resId : Int, val onClick : (position : Int)-> Unit)
+class RecentPhotosAdapter(photos: ArrayList<GeneralPhoto>, @LayoutRes val resId: Int, val onClick: (position: Int) -> Unit)
     : RecyclerView.Adapter<RecentPhotosAdapter.ViewHolder>() {
 
     private val photoList = arrayListOf<GeneralPhoto>()
@@ -27,11 +27,12 @@ class RecentPhotosAdapter(photos : ArrayList<GeneralPhoto>, @LayoutRes val resId
         return viewHolder.setPhoto(photoList[position].getMediumPhotoUrl())
     }
 
-    class ViewHolder(val view : View) : RecyclerView.ViewHolder(view) {
-        fun setPhoto(photoUrl : String) = view.ivPicture.setImageFromUrl(photoUrl)
+    class ViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
+        fun setPhoto(photoUrl: String) = view.ivPicture.setImageFromUrl(photoUrl)
     }
 
-    fun addPhotos(newPhotos : List<GeneralPhoto>) {
+    fun addPhotos(newPhotos: List<GeneralPhoto>) {
+        photoList.clear()
         photoList.addAll(newPhotos)
         notifyDataSetChanged()
     }

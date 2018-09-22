@@ -26,7 +26,10 @@ class ViewModelMain @Inject constructor(private val flickrPhotoRepository: Flick
         isNewImagesLoading.set(true)
         compositeDisposable.add(flickrPhotoRepository.getPhotos(flickrPageNumber++)
                 .observeOn(AndroidSchedulers.mainThread()).subscribe({ newPhotos ->
-                    photos.value = newPhotos
+                    val photoList = arrayListOf<GeneralPhoto>()
+                    photoList.addAll(photos.value?: arrayListOf())
+                    photoList.addAll(newPhotos)
+                    photos.value = photoList
                     isPhotosListVisible.set(true)
                     isNewImagesLoading.set(false)
                 }, {

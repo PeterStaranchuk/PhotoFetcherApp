@@ -23,6 +23,7 @@ class PhotosPagerAdapter(fragmentManager: FragmentManager, photos: List<GeneralP
     override fun getCount(): Int = Int.MAX_VALUE
 
     fun addPhotos(newPhotos : List<GeneralPhoto>) {
+        photoList.clear()
         photoList.addAll(newPhotos)
         notifyDataSetChanged()
     }
