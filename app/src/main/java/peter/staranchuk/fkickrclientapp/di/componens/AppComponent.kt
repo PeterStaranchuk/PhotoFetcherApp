@@ -6,9 +6,7 @@ import dagger.android.AndroidInjector
 import dagger.android.DaggerApplication
 import dagger.android.support.AndroidSupportInjectionModule
 import peter.staranchuk.fkickrclientapp.PhotoFetcherApp
-import peter.staranchuk.fkickrclientapp.di.modules.AppModule
-import peter.staranchuk.fkickrclientapp.di.modules.FlickrModule
-import peter.staranchuk.fkickrclientapp.di.modules.MainActivityModule
+import peter.staranchuk.fkickrclientapp.di.modules.*
 import peter.staranchuk.fkickrclientapp.di.view_model.ViewModelBuilder
 
 @Component(modules = [ViewModelBuilder::class, MainActivityModule::class, FlickrModule::class, AppModule::class, AndroidSupportInjectionModule::class])
