@@ -66,6 +66,7 @@
                 android:id="@+id/btnTryAgain"
                 android:background="@drawable/black_rounded_button"
                 android:text="@string/tryAgain"
+                android:textColor="@android:color/white"
                 android:onClick="@{()-> viewModel.reloadPage()}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
