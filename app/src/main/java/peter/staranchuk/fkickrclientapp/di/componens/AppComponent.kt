@@ -8,8 +8,10 @@ import dagger.android.support.AndroidSupportInjectionModule
 import peter.staranchuk.fkickrclientapp.PhotoFetcherApp
 import peter.staranchuk.fkickrclientapp.di.modules.*
 import peter.staranchuk.fkickrclientapp.di.view_model.ViewModelBuilder
+import javax.inject.Singleton
 
 @Component(modules = [ViewModelBuilder::class, MainActivityModule::class, FlickrModule::class, AppModule::class, AndroidSupportInjectionModule::class])
+@Singleton
 interface AppComponent : AndroidInjector<PhotoFetcherApp> {
 
     @Component.Builder
