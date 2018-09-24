@@ -5,12 +5,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import com.squareup.picasso.Picasso
+import peter.staranchuk.fkickrclientapp.di.modules.GlideApp
+import peter.staranchuk.fkickrclientapp.model.objects.GlideImageLoader
 
 fun ViewGroup.inflate(@LayoutRes layoutRes: Int, attachToRoot: Boolean = false): View {
     return LayoutInflater.from(context).inflate(layoutRes, this, attachToRoot)
 }
 
 fun ImageView.setImageFromUrl(url : String) {
-    Picasso.get().load(url).fit().centerInside().placeholder(R.drawable.image_loading_placeholder).into(this)
+    GlideImageLoader(GlideApp.with(context)).loadImageFromUrl(this, url)
 }
